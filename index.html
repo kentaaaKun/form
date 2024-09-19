@@ -60,11 +60,12 @@
             e.preventDefault(); // Prevent default form submission
 
             // Collect form data
-            var formData = new FormData(this);
-            var data = {};
-            formData.forEach(function (value, key) {
-                data[key] = value;
-            });
+            var data = {
+                firstName: document.getElementById('firstName').value,
+                lastName: document.getElementById('lastName').value,
+                email: document.getElementById('email').value,
+                phoneNumber: document.getElementById('phoneNumber').value
+            };
 
             // Send data to Zapier webhook
             fetch('https://hooks.zapier.com/hooks/catch/20153841/2d2s5n7/', {
