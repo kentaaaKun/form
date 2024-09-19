@@ -56,12 +56,33 @@
     </div> -->
 
     <script>
-        function submitForm(event) {
-            event.preventDefault();
-            const firstName = document.getElementById('firstName').value;
-            const lastName = document.getElementById('lastName').value;
-            const email = document.getElementById('email').value;
-            const phone = document.getElementById('phone').value;
+        document.getElementById('contactForm').addEventListener('submit', function (e) {
+            e.preventDefault(); // Prevent default form submission
+
+            // Collect form data
+            var formData = new FormData(this);
+            var data = {};
+            formData.forEach(function (value, key) {
+                data[key] = value;
+            });
+
+            // Send data to Zapier webhook
+            fetch('https://hooks.zapier.com/hooks/catch/20153841/2d2s5n7/', {
+                method: 'POST',
+                body: JSON.stringify(data),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(response => response.json())
+                .then(result => {
+                    console.log('Success:', result);
+                    // Handle success (e.g., show a success message)
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    // Handle error (e.g., show an error message)
+                });
 
             // Push data to dataLayer for GTM tracking
             window.dataLayer = window.dataLayer || [];
@@ -69,6 +90,8 @@
                 event: 'gtm.formSubmit',
                 formData: { firstName, lastName, email, phone }
             });
+
+            this.submit();
 
             console.log('Form submitted:', firstName, lastName, email, phone);
 
