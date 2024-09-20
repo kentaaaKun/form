@@ -65,11 +65,11 @@
         const phone = document.getElementById('phone').value;
 
         // Push data to dataLayer for GTM tracking
-        // window.dataLayer = window.dataLayer || [];
-        // window.dataLayer.push({
-        //     event: 'gtm.formSubmit',
-        //     formData: { firstName, lastName, email, phone }
-        // });
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+            event: 'gtm.formSubmit',
+            formData: { firstName, lastName, email, phone }
+        });
         
         // Create a form element dynamically
         const form = document.createElement('form');
